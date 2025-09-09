@@ -1,7 +1,19 @@
 class PolynomialDerivative:
+    """
+    A Class that Calculates the First Derivative of Polynomial Equation
+    """
+    
     def __init__(self, degree):
+        """
+        Takes Degree(Highest Power)
+
+        Args:
+            degree (int)
+        """
+        
         self.degree = degree
         self.answer = ""
+    
     @property
     def degree(self):
         return self._degree
@@ -24,6 +36,12 @@ class PolynomialDerivative:
         
         
     def equation(self):
+        """
+        Takes Input
+        Derivates
+        and Stores answer in Standard Algebraic Notation
+        """
+        
         for i in range(self.degree, -1, -1):
             
             coeff = int(input("constant: ")) if i == 0 else int(input(f"x{PolynomialDerivative.superscripter(i)}: "))
@@ -53,5 +71,15 @@ class PolynomialDerivative:
                 
     @staticmethod
     def superscripter(n):
+        """
+        Tranlates numbers and '-' into Superscripts
+
+        Args:
+            n (str)
+
+        Returns:
+            str
+        """
+        
         superscripts = str.maketrans("0123456789-", "⁰¹²³⁴⁵⁶⁷⁸⁹⁻")
         return str(n).translate(superscripts)
