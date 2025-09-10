@@ -15,6 +15,8 @@ class MainWindow(QMainWindow):
         
         self.header = QLabel("Polynomial Derivative Calculator", self)
         
+        self.item_box = QLabel("x²", self)
+        
         self.initUI()
 
     def center(self):
@@ -36,6 +38,12 @@ class MainWindow(QMainWindow):
                                   "border-radius: 20px")
         self.header.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
         
+        self.item_box.setGeometry(50, 90, 60, 50)
+        self.item_box.setFont(QFont("Segoe UI", 20))
+        self.item_box.setStyleSheet("background-color: white;"
+                                    "border-radius: 20px;")
+        self.item_box.setAlignment(Qt.AlignBottom | Qt.AlignHCenter)
+        self.item_box.setContentsMargins(0, 0, 0, 7)
             
         
 def main():
