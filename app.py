@@ -15,7 +15,7 @@ class MainWindow(QMainWindow):
         
         self.header = QLabel("Polynomial Derivative Calculator", self)
         
-        self.item_box = QLabel("x²", self)
+        self.item_box = QLabel("", self)
         
         self.collin_label = QLabel(":", self)
         
@@ -34,9 +34,10 @@ class MainWindow(QMainWindow):
         self.btn0 = QPushButton("0", self)
         self.btneq = QPushButton("=", self)
         
-        
+        self.user_input = None
         
         self.initUI()
+        self.run_core()
 
     def center(self):
         frame_size = self.frameGeometry()
@@ -148,7 +149,64 @@ class MainWindow(QMainWindow):
         button_container.setGeometry(50, 180, 400, 350)
         button_container.setLayout(grid)
         
+        self.btn0.clicked.connect(self.write_0)
+        self.btn1.clicked.connect(self.write_1)
+        self.btn2.clicked.connect(self.write_2)
+        self.btn3.clicked.connect(self.write_3)
+        self.btn4.clicked.connect(self.write_4)
+        self.btn5.clicked.connect(self.write_5)
+        self.btn6.clicked.connect(self.write_6)
+        self.btn7.clicked.connect(self.write_7)
+        self.btn8.clicked.connect(self.write_8)
+        self.btn9.clicked.connect(self.write_9)
+        self.btndel.clicked.connect(self.clear_text)
+        self.btneq.clicked.connect(self.equals_btn)
         
+    def write_0(self):
+        self.equation_box.setText(self.equation_box.text() + "0")        
+        
+    def write_1(self):
+        self.equation_box.setText(self.equation_box.text() + "1")
+        
+    def write_2(self):
+        self.equation_box.setText(self.equation_box.text() + "2")
+        
+    def write_3(self):
+        self.equation_box.setText(self.equation_box.text() + "3")
+        
+    def write_4(self):
+        self.equation_box.setText(self.equation_box.text() + "4")
+        
+    def write_5(self):
+        self.equation_box.setText(self.equation_box.text() + "5")
+        
+    def write_6(self):
+        self.equation_box.setText(self.equation_box.text() + "6")
+        
+    def write_7(self):
+        self.equation_box.setText(self.equation_box.text() + "7")
+        
+    def write_8(self):
+        self.equation_box.setText(self.equation_box.text() + "8")
+        
+    def write_9(self):
+        self.equation_box.setText(self.equation_box.text() + "9")
+        
+    def clear_text(self):
+        self.equation_box.clear()
+        
+    def equals_btn(self):
+        text = self.equation_box.text().strip()
+        
+        if text == "":
+            return None
+        
+        try:
+            self.user_input = int(text) 
+            return self.user_input
+        except ValueError:
+            self.equation_box.setText("Invalid input!")
+            return None
         
 def main():
     app = QApplication(sys.argv)
