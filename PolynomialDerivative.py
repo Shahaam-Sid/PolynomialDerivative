@@ -68,6 +68,37 @@ class PolynomialDerivative:
                 
         if len(self.answer) == 0:
             self.answer = "0"
+            
+    def equation_list_input(self, array):
+        if not isinstance(array, list):
+            raise TypeError("input array must be List[]")
+        
+        for i in range(self.degree, -1, -1):
+            
+            coeff = int(array[i])
+            
+            if i == 0 or coeff == 0:
+                pass
+            else:
+                dydx_coeff = coeff * i
+
+                if i == 1:
+                    temp = str(dydx_coeff)
+                elif i == 2:
+                    temp = str(dydx_coeff) + 'x'
+                else:
+                    temp = str(dydx_coeff) + 'x' + str(PolynomialDerivative.superscripter(i - 1))
+                    
+                if temp[0] == '-':
+                    self.answer += temp
+                else:
+                    self.answer = self.answer + '+' + temp
+                    
+                if self.answer[0] == '+':
+                    self.answer = self.answer[1:]
+                
+        if len(self.answer) == 0:
+            self.answer = "0"
                 
     @staticmethod
     def superscripter(n):
