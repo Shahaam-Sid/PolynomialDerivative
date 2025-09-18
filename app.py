@@ -15,7 +15,7 @@ class MainWindow(QMainWindow):
         
         self.header = QLabel("Polynomial Derivative Calculator", self)
         
-        self.item_box = QLabel("", self)
+        self.item_box = QLabel("d", self)
         
         self.collin_label = QLabel(":", self)
         
@@ -35,9 +35,10 @@ class MainWindow(QMainWindow):
         self.btneq = QPushButton("=", self)
         
         self.user_input = None
+        self._equation = []
+        self._current_index_flag = None
         
         self.initUI()
-        self.run_core()
 
     def center(self):
         frame_size = self.frameGeometry()
@@ -196,23 +197,46 @@ class MainWindow(QMainWindow):
         self.equation_box.clear()
         
     def equals_btn(self):
-        text = self.equation_box.text().strip()
+        if self.item_box.text() == 'd':
+            if self.equation_box.text == "":
+                self.equation_box.setText("Enter Degree of Equation")
+            self._equation.append(self.equation_box.text())
+            self._current_index_flag = int(self._equation[0])
+            self.item_box.setText('x' + f'{PolynomialDerivative.superscripter(self._current_index_flag)}')
+            self.equation_box.clear()
+            print(self._equation)
+            return
+            
+        if self._current_index_flag != 0:
+            if self.equation_box.text == "":
+                self.equation_box.setText("Enter Coefficient")
+            self._equation.append(self.equation_box.text())
+            self._current_index_flag -= 1
+            self.item_box.setText('x' + f'{PolynomialDerivative.superscripter(self._current_index_flag)}')
+            self.equation_box.clear()
+            print(self._equation)
+            return
         
-        if text == "":
-            return None
+        if self._current_index_flag == 0:
+            if self.equation_box.text == "":
+                self.equation_box.setText("Enter Coefficient")
+            self._equation.append(self.equation_box.text())
+            self._current_index_flag = None
+            
+            pd = PolynomialDerivative(int(self._equation.pop(0)))
+            self._equation.reverse()
+            pd.equation_list_input(self._equation)
+            self.item_box.setText('a')
+            self.equation_box.setText(pd.answer)
+            print(self._equation)
+            return
         
-        try:
-            self.user_input = int(text) 
-            return self.user_input
-        except ValueError:
-            self.equation_box.setText("Invalid input!")
-            return None
         
 def main():
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())   
+    sys.exit(app.exec_())
         
 
 if __name__ == "__main__":
